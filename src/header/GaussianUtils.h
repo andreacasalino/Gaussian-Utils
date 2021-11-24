@@ -1,14 +1,23 @@
-namespace gmm {
+#pragma once
+
+#include <Distribution.h>
+
+namespace gauss {
     constexpr double PI_GREEK = 3.14159;
     static const double LOG_2_PI = log(2.0 * PI_GREEK);
 
-    V mean(const std::list<const V*>& l);
+    template<typename Iterable>
+    Eigen::VectorXd computeMean(const Iterable& samples);
+
+    template<typename Iterable>
+    Eigen::VectorXd computeCovariance(const Iterable& samples);
+
+    template<typename Iterable>
+    Eigen::VectorXd computeCovariance(const Iterable& samples, Eigen::VectorXd& mean);
     
-    M covariance(const std::list<const V*>& l, const V& Mean);
+    void computeCovarianceInvert(Eigen::MatrixXd& sigma_inverse, const Eigen::MatrixXd& sigma);
 
-    void invertSymmPositive(M& Sigma_inverse, const M& Sigma);
+    double evalNormalLogDensity(const Distribution& distribution, const Eigen::VectorXf& point);
 
-    double evalNormalLogDensity(const GMMcluster& distr, const V& X);
-
-    bool checkCovariance(const M& Cov);
+    bool isValidCovariance(const Eigen::MatrixXd& sigma);
 }
