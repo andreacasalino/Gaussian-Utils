@@ -17,7 +17,7 @@ namespace gauss {
     
     void computeCovarianceInvert(Eigen::MatrixXd& sigma_inverse, const Eigen::MatrixXd& sigma);
 
-    double evalNormalLogDensity(const Distribution& distribution, const Eigen::VectorXf& point);
+    double evalNormalLogDensity(const Distribution& distribution, const Eigen::VectorXd& point);
 
     bool isValidCovariance(const Eigen::MatrixXd& sigma);
 }
