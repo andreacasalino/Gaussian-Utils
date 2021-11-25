@@ -21,15 +21,17 @@ Eigen::VectorXd computeMean(const Iterable &samples) {
 
 template <typename Iterable>
 Eigen::MatrixXd computeCovariance(const Iterable &samples) {
-  return computeCovariance(samples, computeMean(samples));
+  Eigen::MatrixXd temp;
+  return computeCovariance(samples, temp);
 }
 
 template <typename Iterable>
 Eigen::MatrixXd computeCovariance(const Iterable &samples,
-                                  const Eigen::VectorXd &mean) {
+                                  Eigen::VectorXd &mean) {
   if (samples.empty()) {
     throw std::runtime_error("empty samples container");
   }
+  mean = computeMean(samples);
   Eigen::MatrixXd result;
   double coeff = 1.0 / static_cast<double>(samples.size());
   for (const Eigen::VectorXd &sample : samples) {

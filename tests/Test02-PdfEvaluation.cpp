@@ -1,5 +1,6 @@
-#include "Packer.hpp"
 #include <GaussianDistribution.h>
+#include <Packer.h>
+#include <TestSampler.h>
 #include <Utils.h>
 #include <gtest/gtest.h>
 #include <random>
@@ -15,16 +16,6 @@ double eval_log_density_1d(const double mean, const double sigma,
          0.5 * pow(point - mean, 2) / sigma;
 }
 
-Eigen::VectorXd make_sample(const std::size_t size) {
-  Eigen::VectorXd sample(size);
-  for (std::size_t k = 0; k < size; ++k) {
-    sample(k) =
-        10.0 * static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
-    sample(k) -= 5.0;
-  }
-  return sample;
-}
-
 TEST(PdfEvaluation, 1d) {
   double mean = 0.0;
   double sigma = 1.0;
@@ -33,7 +24,7 @@ TEST(PdfEvaluation, 1d) {
     gauss::GaussianDistribution distribution(
         gauss::test::make_vector({mean}), gauss::test::make_vector({{sigma}}));
     for (int k = 0; k < TRIALS; ++k) {
-      const auto sample = make_sample(1);
+      const auto sample = gauss::test::make_sample(1, 5.0);
       EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
                      eval_log_density_1d(mean, sigma, sample(0)));
     }
@@ -44,7 +35,7 @@ TEST(PdfEvaluation, 1d) {
     gauss::GaussianDistribution distribution(
         gauss::test::make_vector({mean}), gauss::test::make_vector({{sigma}}));
     for (int k = 0; k < TRIALS; ++k) {
-      const auto sample = make_sample(1);
+      const auto sample = gauss::test::make_sample(1, 5.0);
       EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
                      eval_log_density_1d(mean, sigma, sample(0)));
     }
@@ -55,7 +46,7 @@ TEST(PdfEvaluation, 1d) {
     gauss::GaussianDistribution distribution(
         gauss::test::make_vector({mean}), gauss::test::make_vector({{sigma}}));
     for (int k = 0; k < TRIALS; ++k) {
-      const auto sample = make_sample(1);
+      const auto sample = gauss::test::make_sample(1, 5.0);
       EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
                      eval_log_density_1d(mean, sigma, sample(0)));
     }
@@ -67,7 +58,7 @@ TEST(PdfEvaluation, 1d) {
     gauss::GaussianDistribution distribution(
         gauss::test::make_vector({mean}), gauss::test::make_vector({{sigma}}));
     for (int k = 0; k < TRIALS; ++k) {
-      const auto sample = make_sample(1);
+      const auto sample = gauss::test::make_sample(1, 5.0);
       EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
                      eval_log_density_1d(mean, sigma, sample(0)));
     }
@@ -88,7 +79,7 @@ TEST(PdfEvaluation, 2d) {
   {
     gauss::GaussianDistribution distribution(mean, sigma);
     for (int k = 0; k < TRIALS; ++k) {
-      const auto sample = make_sample(2);
+      const auto sample = gauss::test::make_sample(2, 5.0);
       EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
                      eval_log_density_nd(mean, sigma, sample));
     }
@@ -98,7 +89,7 @@ TEST(PdfEvaluation, 2d) {
   {
     gauss::GaussianDistribution distribution(mean, sigma);
     for (int k = 0; k < TRIALS; ++k) {
-      const auto sample = make_sample(2);
+      const auto sample = gauss::test::make_sample(2, 5.0);
       EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
                      eval_log_density_nd(mean, sigma, sample));
     }
@@ -108,7 +99,7 @@ TEST(PdfEvaluation, 2d) {
   {
     gauss::GaussianDistribution distribution(mean, sigma);
     for (int k = 0; k < TRIALS; ++k) {
-      const auto sample = make_sample(2);
+      const auto sample = gauss::test::make_sample(2, 5.0);
       EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
                      eval_log_density_nd(mean, sigma, sample));
     }
@@ -123,7 +114,7 @@ TEST(PdfEvaluation, 3d) {
   {
     gauss::GaussianDistribution distribution(mean, sigma);
     for (int k = 0; k < TRIALS; ++k) {
-      const auto sample = make_sample(3);
+      const auto sample = gauss::test::make_sample(3, 5.0);
       EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
                      eval_log_density_nd(mean, sigma, sample));
     }

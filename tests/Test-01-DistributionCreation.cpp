@@ -1,4 +1,4 @@
-#include "Packer.hpp"
+#include <Packer.h>
 #include <gtest/gtest.h>
 
 #include <GaussianDistribution.h>
