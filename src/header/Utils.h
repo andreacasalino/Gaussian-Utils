@@ -5,7 +5,6 @@
 
 namespace gauss {
 constexpr double PI_GREEK = 3.14159;
-static const double LOG_2_PI = log(2.0 * PI_GREEK);
 
 template <typename Iterable>
 Eigen::VectorXd computeMean(const Iterable &samples) {
@@ -43,7 +42,4 @@ void computeCovarianceInvert(Eigen::MatrixXd &sigma_inverse,
                              const Eigen::MatrixXd &sigma);
 
 bool isSymmetricPositive(const Eigen::MatrixXd &sigma);
-
-double evalNormalLogDensity(const Distribution &distribution,
-                            const Eigen::VectorXd &point);
 } // namespace gauss
