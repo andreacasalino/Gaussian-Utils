@@ -12,7 +12,7 @@ double GaussianDistributionBase::getAbsDeterminantCovarianceInv() const {
 
 namespace {
 const Eigen::MatrixXd &check_covariance(const Eigen::MatrixXd &covariance) {
-  if (!isValidCovariance(covariance)) {
+  if (!isSymmetricPositive(covariance)) {
     throw std::runtime_error("Invalid covariance");
   }
   return covariance;
