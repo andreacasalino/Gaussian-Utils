@@ -6,15 +6,20 @@
 
 namespace gauss {
 class GaussianDistributionBase : public Distribution {
+public:
+  GaussianDistributionBase(const GaussianDistributionBase &o) = delete;
+  GaussianDistributionBase &
+  operator=(const GaussianDistributionBase &o) = delete;
+
 protected:
   // throw in case of not valid inputs
   GaussianDistributionBase(const Eigen::VectorXd &mean) : mean(mean){};
 
   Eigen::VectorXd getMean() const override { return mean; };
-  double getAbsDeterminantCovarianceInv() const override;
+  double getDeterminantCovariance() const override;
 
   const Eigen::VectorXd mean;
-  mutable std::unique_ptr<const double> covariance_inv_abs_determinant;
+  mutable std::unique_ptr<const double> covariance_abs_determinant;
 };
 
 class GaussianDistribution : public GaussianDistributionBase {
@@ -27,6 +32,9 @@ public:
   GaussianDistribution(const Iterable &samples)
       : GaussianDistributionBase(computeMean(samples),
                                  computeCovariance(samples)){};
+
+  GaussianDistribution(const GaussianDistribution &o);
+  GaussianDistribution &operator=(const GaussianDistribution &o);
 
   Eigen::MatrixXd getCovariance() const override { return covariance; };
   Eigen::MatrixXd getCovarianceInv() const override;

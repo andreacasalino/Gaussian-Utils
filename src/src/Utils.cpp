@@ -25,10 +25,11 @@ bool isSymmetricPositive(const Eigen::MatrixXd &sigma) {
   Eigen::EigenSolver<Eigen::MatrixXd> eig_solv(sigma);
   auto eigs = eig_solv.eigenvalues();
 
-  // check all values are sufficient high
+  // check all values are positive
   for (std::size_t k = 0; k < K; ++k) {
-    if (abs(eigs(k).real()) < TOLLERANCE)
+    if (eigs(k).real() < -TOLLERANCE) {
       return false;
+    }
   }
   return true;
 }

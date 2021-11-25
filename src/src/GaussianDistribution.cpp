@@ -1,15 +1,15 @@
+#include <Eigen/Dense>
 #include <GaussianDistribution.h>
 #include <stdexcept>
 
 namespace gauss {
-double GaussianDistributionBase::getAbsDeterminantCovarianceInv() const {
-  if (!covariance_inv_abs_determinant) {
-    covariance_inv_abs_determinant =
-        std::make_unique<const double>(abs(getCovarianceInv().determinant()));
+double GaussianDistributionBase::getDeterminantCovariance() const {
+  if (!covariance_abs_determinant) {
+    covariance_abs_determinant =
+        std::make_unique<const double>(abs(getCovariance().determinant()));
   }
-  return *covariance_inv_abs_determinant;
+  return *covariance_abs_determinant;
 }
-
 namespace {
 const Eigen::MatrixXd &check_covariance(const Eigen::MatrixXd &covariance) {
   if (!isSymmetricPositive(covariance)) {

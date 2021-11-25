@@ -9,7 +9,7 @@ double Distribution::evalNormalLogDensity(const Eigen::VectorXd &point) const {
   const auto &cov_inv = getCovarianceInv();
   den = (point - mean).transpose() * cov_inv * (point - mean);
   den += point.size() * LOG_2_PI;
-  den += log(getAbsDeterminantCovarianceInv());
+  den += log(getDeterminantCovariance());
   den *= -0.5;
   return den;
 }

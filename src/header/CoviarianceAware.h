@@ -9,7 +9,7 @@ public:
 
   virtual Eigen::MatrixXd getCovariance() const = 0;
   virtual Eigen::MatrixXd getCovarianceInv() const = 0;
-  virtual double getAbsDeterminantCovarianceInv() const = 0;
+  virtual double getDeterminantCovariance() const = 0;
 
 protected:
   CovarianceAware() = default;

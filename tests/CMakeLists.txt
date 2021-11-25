@@ -10,7 +10,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 function(MakeTest NAME)
-add_executable(${NAME} ${NAME}.cpp)
+add_executable(${NAME} 
+${NAME}.cpp
+Packer.hpp
+)
 
 target_link_libraries(${NAME}
 PUBLIC
@@ -21,6 +24,9 @@ PUBLIC
 install(TARGETS ${NAME})
 endfunction()
 
-MakeTest(Test01-PdfEvaluation)
 
-MakeTest(Test02-Sampling)
+MakeTest(Test-01-DistributionCreation)
+
+MakeTest(Test02-PdfEvaluation)
+
+MakeTest(Test03-Sampling)
