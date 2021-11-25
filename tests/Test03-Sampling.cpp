@@ -6,9 +6,9 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-constexpr std::size_t SAMPLES = 10000;
+constexpr std::size_t SAMPLES = 100000;
 
-constexpr double TOLL = 0.001;
+constexpr double TOLL = 0.025;
 #define EXPECT_SIMILAR(VAL_A, VAL_B) EXPECT_LE(abs(VAL_A - VAL_B), TOLL)
 
 void expect_similar(const Eigen::VectorXd &a, const Eigen::VectorXd &b) {

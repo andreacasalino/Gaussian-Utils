@@ -14,8 +14,9 @@ Sampler::Sampler(const Distribution &distribution)
 
 Eigen::VectorXd Sampler::getSample() const {
   Eigen::VectorXd sample(traslation.size());
-  for (std::size_t k = 0; k < static_cast<std::size_t>(traslation.size()); ++k)
-    sample(k) = gauss_iso(generator);
+  for (std::size_t k = 0; k < static_cast<std::size_t>(traslation.size()); ++k) {
+      sample(k) = gauss_iso(generator);
+  }
   sample = rotation * sample;
   sample += traslation;
   return sample;

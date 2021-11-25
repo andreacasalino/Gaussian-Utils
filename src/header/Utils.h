@@ -11,7 +11,8 @@ Eigen::VectorXd computeMean(const Iterable &samples) {
   if (samples.empty()) {
     throw std::runtime_error("empty samples container");
   }
-  Eigen::VectorXd result;
+  Eigen::VectorXd result(samples.front().size());
+  result.setZero();
   double coeff = 1.0 / static_cast<double>(samples.size());
   for (const Eigen::VectorXd &sample : samples) {
     result += coeff * sample;
@@ -32,10 +33,11 @@ Eigen::MatrixXd computeCovariance(const Iterable &samples,
     throw std::runtime_error("empty samples container");
   }
   mean = computeMean(samples);
-  Eigen::MatrixXd result;
+  Eigen::MatrixXd result(samples.front().size(), samples.front().size());
+  result.setZero();
   double coeff = 1.0 / static_cast<double>(samples.size());
   for (const Eigen::VectorXd &sample : samples) {
-    result += (sample - mean) * (sample - mean).transpose();
+    result += coeff * (sample - mean) * (sample - mean).transpose();
   }
   return result;
 }

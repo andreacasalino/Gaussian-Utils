@@ -25,7 +25,7 @@ function(MakeTest NAME)
 endfunction()
 
 
-MakeTest(Test-01-DistributionCreation)
+MakeTest(Test01-DistributionCreation)
 
 MakeTest(Test02-PdfEvaluation)
 
