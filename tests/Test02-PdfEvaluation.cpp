@@ -65,12 +65,67 @@ TEST(PdfEvaluation, 1d) {
   sigma = 0.2;
   {
     gauss::GaussianDistribution distribution(
-        gauss::test::make_vector({mean}),
-        gauss::test::make_vector({{sigma}}));
+        gauss::test::make_vector({mean}), gauss::test::make_vector({{sigma}}));
     for (int k = 0; k < TRIALS; ++k) {
       const auto sample = make_sample(1);
       EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
                      eval_log_density_1d(mean, sigma, sample(0)));
+    }
+  }
+}
+
+double eval_log_density_nd(const Eigen::VectorXd &mean,
+                           const Eigen::MatrixXd sigma,
+                           const Eigen::VectorXd &point) {
+  throw 0;
+  return 0.0;
+}
+
+TEST(PdfEvaluation, 2d) {
+  Eigen::VectorXd mean = gauss::test::make_vector({0.0, 0.0});
+  Eigen::MatrixXd sigma = gauss::test::make_matrix({{1.0, 0.0}, {0.0, 1.0}});
+
+  {
+    gauss::GaussianDistribution distribution(mean, sigma);
+    for (int k = 0; k < TRIALS; ++k) {
+      const auto sample = make_sample(2);
+      EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
+                     eval_log_density_nd(mean, sigma, sample));
+    }
+  }
+
+  mean = gauss::test::make_vector({1.0, -1.0});
+  {
+    gauss::GaussianDistribution distribution(mean, sigma);
+    for (int k = 0; k < TRIALS; ++k) {
+      const auto sample = make_sample(2);
+      EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
+                     eval_log_density_nd(mean, sigma, sample));
+    }
+  }
+
+  sigma = gauss::test::make_matrix({{1.5, -0.1}, {-0.1, 1.2}});
+  {
+    gauss::GaussianDistribution distribution(mean, sigma);
+    for (int k = 0; k < TRIALS; ++k) {
+      const auto sample = make_sample(2);
+      EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
+                     eval_log_density_nd(mean, sigma, sample));
+    }
+  }
+}
+
+TEST(PdfEvaluation, 3d) {
+  Eigen::VectorXd mean = gauss::test::make_vector({1.0, -2.0, 1.5});
+  Eigen::MatrixXd sigma = gauss::test::make_matrix(
+      {{1.0, 0.0, 0.0}, {0.0, 1.5, 0.0}, {0.0, 0.0, 0.3}});
+
+  {
+    gauss::GaussianDistribution distribution(mean, sigma);
+    for (int k = 0; k < TRIALS; ++k) {
+      const auto sample = make_sample(3);
+      EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
+                     eval_log_density_nd(mean, sigma, sample));
     }
   }
 }

@@ -9,19 +9,19 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
+add_subdirectory(src)
+
 function(MakeTest NAME)
-add_executable(${NAME} 
-${NAME}.cpp
-Packer.hpp
-)
+  add_executable(${NAME}  ${NAME}.cpp)
 
-target_link_libraries(${NAME}
-PUBLIC
-    gtest
-    GaussianUtils
-)
+  target_link_libraries(${NAME}
+  PUBLIC
+      gtest
+      GaussianUtils
+      TestUtils
+  )
 
-install(TARGETS ${NAME})
+  install(TARGETS ${NAME})
 endfunction()
 
 

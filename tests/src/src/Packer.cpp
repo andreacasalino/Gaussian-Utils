@@ -1,6 +1,5 @@
-#include <Eigen/Core>
+#include <Packer.h>
 #include <stdexcept>
-#include <vector>
 
 namespace gauss::test {
 Eigen::VectorXd make_vector(const std::vector<double> &values) {
