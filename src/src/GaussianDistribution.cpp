@@ -44,25 +44,25 @@ GaussianDistribution& GaussianDistribution::operator=(const GaussianDistribution
 
 Eigen::MatrixXd
 GaussianDistribution::GaussianDistribution::getCovariance() const {
-  if (nullptr != covariance) {
+  if (nullptr == covariance) {
     covariance =
         std::make_unique<const Eigen::MatrixXd>(covariance_inv->inverse());
   }
   return *covariance;
 };
 Eigen::MatrixXd GaussianDistribution::getCovarianceInv() const {
-  if (nullptr != covariance_inv) {
+  if (nullptr == covariance_inv) {
     covariance_inv =
         std::make_unique<const Eigen::MatrixXd>(covariance->inverse());
   }
   return *covariance_inv;
 };
 double GaussianDistribution::getCovarianceDeterminant() const {
-  if (nullptr != covariance) {
+  if (nullptr == covariance) {
     covariance =
         std::make_unique<const Eigen::MatrixXd>(covariance_inv->inverse());
   }
-  if (nullptr != covariance_abs_determinant) {
+  if (nullptr == covariance_abs_determinant) {
     covariance_abs_determinant =
         std::make_unique<double>(covariance->determinant());
   }
@@ -73,7 +73,7 @@ static const double LOG_2_PI = log(2.0 * PI_GREEK);
 double
 GaussianDistribution::evaluateLogDensity(const Eigen::VectorXd &point) const {
   double den;
-  if (nullptr != covariance_inv) {
+  if (nullptr == covariance_inv) {
     covariance_inv =
         std::make_unique<const Eigen::MatrixXd>(covariance->inverse());
   }

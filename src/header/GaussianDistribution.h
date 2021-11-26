@@ -50,7 +50,10 @@ public:
   double evaluateLogDensity(const Eigen::VectorXd &point) const override;
 
   double evaluateKullbackLeiblerDivergence(
-      const GaussianDistribution &other) const override;
+      const GaussianDistribution& other) const override {
+      throw 0;
+      return 0.0;
+  };
 
 protected:
   Eigen::VectorXd mean;

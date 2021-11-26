@@ -25,7 +25,7 @@ TEST(PdfEvaluation, 1d) {
         gauss::test::make_vector({mean}), gauss::test::make_vector({{sigma}}));
     for (int k = 0; k < TRIALS; ++k) {
       const auto sample = gauss::test::make_sample(1, 5.0);
-      EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
+      EXPECT_SIMILAR(distribution.evaluateLogDensity(sample),
                      eval_log_density_1d(mean, sigma, sample(0)));
     }
   }
@@ -36,7 +36,7 @@ TEST(PdfEvaluation, 1d) {
         gauss::test::make_vector({mean}), gauss::test::make_vector({{sigma}}));
     for (int k = 0; k < TRIALS; ++k) {
       const auto sample = gauss::test::make_sample(1, 5.0);
-      EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
+      EXPECT_SIMILAR(distribution.evaluateLogDensity(sample),
                      eval_log_density_1d(mean, sigma, sample(0)));
     }
   }
@@ -47,7 +47,7 @@ TEST(PdfEvaluation, 1d) {
         gauss::test::make_vector({mean}), gauss::test::make_vector({{sigma}}));
     for (int k = 0; k < TRIALS; ++k) {
       const auto sample = gauss::test::make_sample(1, 5.0);
-      EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
+      EXPECT_SIMILAR(distribution.evaluateLogDensity(sample),
                      eval_log_density_1d(mean, sigma, sample(0)));
     }
   }
@@ -59,7 +59,7 @@ TEST(PdfEvaluation, 1d) {
         gauss::test::make_vector({mean}), gauss::test::make_vector({{sigma}}));
     for (int k = 0; k < TRIALS; ++k) {
       const auto sample = gauss::test::make_sample(1, 5.0);
-      EXPECT_SIMILAR(distribution.evalNormalLogDensity(sample),
+      EXPECT_SIMILAR(distribution.evaluateLogDensity(sample),
                      eval_log_density_1d(mean, sigma, sample(0)));
     }
   }
