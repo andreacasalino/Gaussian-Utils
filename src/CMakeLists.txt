@@ -1,6 +1,15 @@
+set(EigenName_To_Link Eigen3::Eigen)
+
 if(EIGEN_INSTALL_FOLDER)
-	add_subdirectory(${EIGEN_INSTALL_FOLDER})
+	message(STATUS "linking Eigen at folder ${EIGEN_INSTALL_FOLDER}")
+	add_library(Eigen3_Shell INTERFACE)
+	
+	target_include_directories(Eigen3_Shell INTERFACE
+		${EIGEN_INSTALL_FOLDER}
+	)
+	set(EigenName_To_Link Eigen3_Shell)	
 else()
+	message(STATUS "fetching Eigen")
 	include(FetchContent)
 	FetchContent_Declare(
 	  eigen
@@ -15,5 +24,6 @@ set(PROJECT_SHORTNAME GaussianUtils)
 MakeLibrary(${PROJECT_SHORTNAME} header)
 
 target_link_libraries(${PROJECT_SHORTNAME} PUBLIC
-Eigen3::Eigen
+${EigenName_To_Link}
 )
+
