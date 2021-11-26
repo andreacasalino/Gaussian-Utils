@@ -7,13 +7,13 @@
 
 #pragma once
 
-#include <Distribution.h>
+#include <GaussianDistribution.h>
 #include <random>
 
 namespace gauss {
-class Sampler {
+class GaussianDistributionSampler {
 public:
-  Sampler(const Distribution &distribution);
+  GaussianDistributionSampler(const GaussianDistribution &distribution);
 
   Eigen::VectorXd getSample() const;
 

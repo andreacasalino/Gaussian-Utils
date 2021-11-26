@@ -1,6 +1,6 @@
 #include <GaussianDistribution.h>
+#include <GaussianDistributionFactory.h>
 #include <Packer.h>
-#include <Sampler.h>
 #include <TestSampler.h>
 #include <Utils.h>
 #include <gtest/gtest.h>
@@ -28,23 +28,12 @@ void expect_similar(const Eigen::MatrixXd &a, const Eigen::MatrixXd &b) {
   }
 };
 
-std::vector<Eigen::VectorXd>
-make_samples(const gauss::GaussianDistribution &distr) {
-  gauss::Sampler sampler(distr);
-  std::vector<Eigen::VectorXd> samples;
-  samples.reserve(SAMPLES);
-  for (int k = 0; k < SAMPLES; ++k) {
-    samples.push_back(sampler.getSample());
-  }
-  return samples;
-}
-
 TEST(Sampling, 3d) {
   Eigen::VectorXd mean = gauss::test::make_vector({1.0, -2.0, 1.5});
   Eigen::MatrixXd sigma = gauss::test::make_matrix(
       {{1.0, 0.0, 0.0}, {0.0, 1.5, 0.0}, {0.0, 0.0, 0.3}});
 
-  auto samples = make_samples(gauss::GaussianDistribution(mean, sigma));
+  auto samples = gauss::GaussianDistribution(mean, sigma).drawSamples(SAMPLES);
   Eigen::VectorXd samples_mean;
   auto samples_cov = gauss::computeCovariance(samples, samples_mean);
 
@@ -53,10 +42,11 @@ TEST(Sampling, 3d) {
 }
 
 TEST(Sampling, 6d) {
-  Eigen::VectorXd mean = gauss::test::make_sample(6, 5.0);
-  Eigen::MatrixXd sigma = gauss::test::make_covariance(6, 3.0);
+   auto model = gauss::GaussianDistributionFactory(6).makeRandomModel();
+   auto mean = model->getMean();
+   auto sigma = model->getCovariance();
 
-  auto samples = make_samples(gauss::GaussianDistribution(mean, sigma));
+  auto samples = model->drawSamples(SAMPLES);
   Eigen::VectorXd samples_mean;
   auto samples_cov = gauss::computeCovariance(samples, samples_mean);
 

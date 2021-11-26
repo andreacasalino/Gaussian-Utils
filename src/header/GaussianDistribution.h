@@ -7,62 +7,59 @@
 
 #pragma once
 
-#include <Distribution.h>
 #include <Utils.h>
+#include <components/CoviarianceAware.h>
+#include <components/DivergenceAware.h>
+#include <components/DrawSamplesCapable.h>
+#include <components/LogDensityAware.h>
+#include <components/MeanAware.h>
 #include <memory>
 
 namespace gauss {
-class GaussianDistributionBase : public Distribution {
-public:
-  GaussianDistributionBase(const GaussianDistributionBase &o) = delete;
-  GaussianDistributionBase &
-  operator=(const GaussianDistributionBase &o) = delete;
-
-protected:
-  // throw in case of not valid inputs
-  GaussianDistributionBase(const Eigen::VectorXd &mean) : mean(mean){};
-
-  Eigen::VectorXd getMean() const override { return mean; };
-  double getDeterminantCovariance() const override;
-
-  const Eigen::VectorXd mean;
-  mutable std::unique_ptr<const double> covariance_abs_determinant;
-};
-
-class GaussianDistribution : public GaussianDistributionBase {
+class GaussianDistribution : public CovarianceAware,
+                             public DivergenceAware<GaussianDistribution>,
+                             public DrawSamplesCapable,
+                             public LogDensityAware,
+                             public MeanAware {
 public:
   // throw in case of not valid inputs
   GaussianDistribution(const Eigen::VectorXd &mean,
-                       const Eigen::MatrixXd &covariance);
+                       const Eigen::MatrixXd &covariance,
+                       bool treat_covariance_as_inv = false);
 
   template <typename Iterable>
   GaussianDistribution(const Iterable &samples)
-      : GaussianDistributionBase(computeMean(samples),
-                                 computeCovariance(samples)){};
+      : GaussianDistribution(computeMean(samples),
+                             computeCovariance(samples)){};
 
   GaussianDistribution(const GaussianDistribution &o);
   GaussianDistribution &operator=(const GaussianDistribution &o);
 
-  Eigen::MatrixXd getCovariance() const override { return covariance; };
-  Eigen::MatrixXd getCovarianceInv() const override;
+  GaussianDistribution(GaussianDistribution &&o) = delete;
+  GaussianDistribution &operator=(GaussianDistribution &&o) = delete;
 
-protected:
-  const Eigen::MatrixXd covariance;
-  mutable std::unique_ptr<const Eigen::MatrixXd> covariance_inv;
-};
-
-class GaussianDistributionFromInverseCov : public GaussianDistributionBase {
-public:
-  // throw in case of not valid inputs
-  GaussianDistributionFromInverseCov(const Eigen::VectorXd &mean,
-                                     const Eigen::MatrixXd &covariance_inv);
+  Eigen::VectorXd getMean() const override { return mean; }
 
   Eigen::MatrixXd getCovariance() const override;
-  Eigen::MatrixXd getCovarianceInv() const override { return covariance_inv; };
+  Eigen::MatrixXd getCovarianceInv() const override;
+  double getCovarianceDeterminant() const override;
+
+  std::vector<Eigen::VectorXd>
+  drawSamples(const std::size_t samples) const override;
+
+  double evaluateLogDensity(const Eigen::VectorXd &point) const override;
+
+  double evaluateKullbackLeiblerDivergence(
+      const GaussianDistribution& other) const override {
+      throw 0;
+      return 0.0;
+  };
 
 protected:
+  Eigen::VectorXd mean;
   mutable std::unique_ptr<const Eigen::MatrixXd> covariance;
-  const Eigen::MatrixXd covariance_inv;
+  mutable std::unique_ptr<const Eigen::MatrixXd> covariance_inv;
+  mutable std::unique_ptr<const double> covariance_abs_determinant;
 };
 
 } // namespace gauss
