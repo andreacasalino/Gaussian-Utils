@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <Distribution.h>
+#include <Eigen/Core>
 #include <stdexcept>
 
 namespace gauss {
@@ -52,5 +52,5 @@ Eigen::MatrixXd computeCovariance(const Iterable &samples,
 void computeCovarianceInvert(Eigen::MatrixXd &sigma_inverse,
                              const Eigen::MatrixXd &sigma);
 
-bool isSymmetricPositive(const Eigen::MatrixXd &sigma);
+bool isSuitableCovarianceMatrix(const Eigen::MatrixXd &sigma);
 } // namespace gauss

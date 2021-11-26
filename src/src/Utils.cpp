@@ -19,7 +19,7 @@ void computeCovarianceInvert(Eigen::MatrixXd &sigma_inverse,
 }
 
 constexpr double TOLLERANCE = 1e-5;
-bool isSymmetricPositive(const Eigen::MatrixXd &sigma) {
+bool isSuitableCovarianceMatrix(const Eigen::MatrixXd &sigma) {
   if (sigma.rows() != sigma.cols()) {
     throw std::runtime_error("Invalid covariance");
   }
