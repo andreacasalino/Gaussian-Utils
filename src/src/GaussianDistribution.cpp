@@ -1,3 +1,10 @@
+/**
+ * Author:    Andrea Casalino
+ * Created:   26.11.2021
+ *
+ * report any bug to andrecasa91@gmail.com.
+ **/
+
 #include <Eigen/Dense>
 #include <GaussianDistribution.h>
 #include <stdexcept>
@@ -22,9 +29,9 @@ const Eigen::MatrixXd &check_covariance(const Eigen::MatrixXd &covariance) {
 GaussianDistribution::GaussianDistribution(const Eigen::VectorXd &mean,
                                            const Eigen::MatrixXd &covariance)
     : GaussianDistributionBase(mean), covariance(check_covariance(covariance)) {
-    if (mean.size() != covariance.cols()) {
-        throw std::runtime_error("Inconsistent mean-covariance pair");
-    }
+  if (mean.size() != covariance.cols()) {
+    throw std::runtime_error("Inconsistent mean-covariance pair");
+  }
 }
 
 Eigen::MatrixXd GaussianDistribution::getCovarianceInv() const {
@@ -39,9 +46,9 @@ GaussianDistributionFromInverseCov::GaussianDistributionFromInverseCov(
     const Eigen::VectorXd &mean, const Eigen::MatrixXd &covarianceInv)
     : GaussianDistributionBase(mean),
       covariance_inv(check_covariance(covarianceInv)) {
-    if (mean.size() != covarianceInv.cols()) {
-        throw std::runtime_error("Inconsistent mean-covariance pair");
-    }
+  if (mean.size() != covarianceInv.cols()) {
+    throw std::runtime_error("Inconsistent mean-covariance pair");
+  }
 }
 
 Eigen::MatrixXd GaussianDistributionFromInverseCov::getCovariance() const {

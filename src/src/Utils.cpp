@@ -1,3 +1,10 @@
+/**
+ * Author:    Andrea Casalino
+ * Created:   26.11.2021
+ *
+ * report any bug to andrecasa91@gmail.com.
+ **/
+
 #include <Eigen/Eigenvalues>
 #include <Utils.h>
 
@@ -13,9 +20,9 @@ void computeCovarianceInvert(Eigen::MatrixXd &sigma_inverse,
 
 constexpr double TOLLERANCE = 1e-5;
 bool isSymmetricPositive(const Eigen::MatrixXd &sigma) {
-    if (sigma.rows() != sigma.cols()) {
-        throw std::runtime_error("Invalid covariance");
-    }
+  if (sigma.rows() != sigma.cols()) {
+    throw std::runtime_error("Invalid covariance");
+  }
   std::size_t K = (std::size_t)sigma.cols();
   std::size_t c;
   for (std::size_t r = 0; r < K; ++r) {
