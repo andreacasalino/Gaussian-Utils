@@ -21,7 +21,7 @@ void computeCovarianceInvert(Eigen::MatrixXd &sigma_inverse,
 constexpr double TOLLERANCE = 1e-5;
 bool isSuitableCovarianceMatrix(const Eigen::MatrixXd &sigma) {
   if (sigma.rows() != sigma.cols()) {
-    throw std::runtime_error("Invalid covariance");
+    return false;
   }
   std::size_t K = (std::size_t)sigma.cols();
   std::size_t c;

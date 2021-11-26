@@ -5,21 +5,22 @@
  * report any bug to andrecasa91@gmail.com.
  **/
 
+#include "GaussianDistributionSampler.h"
 #include <Eigen/Cholesky>
-#include <Sampler.h>
 
 namespace gauss {
 namespace {
-Eigen::MatrixXd compute_rotation(const Distribution &distribution) {
+Eigen::MatrixXd compute_rotation(const GaussianDistribution &distribution) {
   Eigen::LLT<Eigen::MatrixXd> lltOfCov(distribution.getCovariance());
   return lltOfCov.matrixL();
 }
 } // namespace
-Sampler::Sampler(const Distribution &distribution)
+GaussianDistributionSampler::GaussianDistributionSampler(
+    const GaussianDistribution &distribution)
     : traslation(distribution.getMean()),
       rotation(compute_rotation(distribution)) {}
 
-Eigen::VectorXd Sampler::getSample() const {
+Eigen::VectorXd GaussianDistributionSampler::getSample() const {
   Eigen::VectorXd sample(traslation.size());
   for (std::size_t k = 0; k < static_cast<std::size_t>(traslation.size());
        ++k) {
