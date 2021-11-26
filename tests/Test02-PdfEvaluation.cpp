@@ -65,6 +65,56 @@ TEST(PdfEvaluation, 1d) {
   }
 }
 
+double eval_log_density_nd(const Eigen::VectorXd& mean, const Eigen::VectorXd& sigma, const Eigen::VectorXd& point) {
+    double result = 0.0;
+    for (Eigen::Index i = 0; i < mean.size(); ++i) {
+        result += eval_log_density_1d(mean(i), sigma(i), point(i));
+    }
+    return result;
+}
+
+void make_positive(Eigen::VectorXd& sigma) {
+    for (Eigen::Index i = 0; i < sigma.size(); ++i) {
+        sigma(i) = abs(sigma(i));
+    }
+}
+
+Eigen::MatrixXd make_diagonal_covariance(Eigen::VectorXd sigma) {
+    Eigen::MatrixXd covariance(sigma.size(), sigma.size());
+    covariance.setZero();
+    for (Eigen::Index i = 0; i < sigma.size(); ++i) {
+        covariance(i, i) = sigma(i);
+    }
+    return covariance;
+}
+
+TEST(PdfEvaluation, 2d) {
+    auto mean = gauss::test::make_sample(2, 3.0);
+    auto sigma = gauss::test::make_sample(2, 3.0);
+    make_positive(sigma);
+
+    gauss::GaussianDistribution distribution(mean, make_diagonal_covariance(sigma));
+    for (int k = 0; k < TRIALS; ++k) {
+        const auto sample = gauss::test::make_sample(2, 5.0);
+        EXPECT_SIMILAR(distribution.evaluateLogDensity(sample),
+            eval_log_density_nd(mean, sigma, sample));
+    }
+}
+
+TEST(PdfEvaluation, 6d) {
+    auto mean = gauss::test::make_sample(6, 3.0);
+    auto sigma = gauss::test::make_sample(6, 3.0);
+    make_positive(sigma);
+
+    gauss::GaussianDistribution distribution(mean, make_diagonal_covariance(sigma));
+    for (int k = 0; k < TRIALS; ++k) {
+        const auto sample = gauss::test::make_sample(6, 5.0);
+        EXPECT_SIMILAR(distribution.evaluateLogDensity(sample),
+            eval_log_density_nd(mean, sigma, sample));
+    }
+}
+
+
 int main(int argc, char *argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
