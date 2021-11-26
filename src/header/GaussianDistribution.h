@@ -53,7 +53,7 @@ public:
       const GaussianDistribution &other) const override;
 
 protected:
-  const Eigen::VectorXd mean;
+  Eigen::VectorXd mean;
   mutable std::unique_ptr<const Eigen::MatrixXd> covariance;
   mutable std::unique_ptr<const Eigen::MatrixXd> covariance_inv;
   mutable std::unique_ptr<const double> covariance_abs_determinant;

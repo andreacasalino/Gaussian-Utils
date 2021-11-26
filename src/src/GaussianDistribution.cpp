@@ -5,7 +5,7 @@
  * report any bug to andrecasa91@gmail.com.
  **/
 
-#include "GaussianDistributionSampler.h"
+#include <GaussianDistributionSampler.h>
 #include <Eigen/Dense>
 #include <GaussianDistribution.h>
 #include <stdexcept>
@@ -23,6 +23,23 @@ GaussianDistribution::GaussianDistribution(const Eigen::VectorXd &mean,
   } else {
     this->covariance = std::make_unique<const Eigen::MatrixXd>(covariance);
   }
+}
+
+GaussianDistribution::GaussianDistribution(const GaussianDistribution& o) {
+    *this = o;
+}
+GaussianDistribution& GaussianDistribution::operator=(const GaussianDistribution& o) {
+    this->mean = o.mean;
+    if (nullptr != o.covariance) {
+        this->covariance = std::make_unique<Eigen::MatrixXd>(*o.covariance);
+    }
+    if (nullptr != o.covariance_inv) {
+        this->covariance_inv = std::make_unique<Eigen::MatrixXd>(*o.covariance_inv);
+    }
+    if (nullptr != o.covariance_abs_determinant) {
+        this->covariance_abs_determinant = std::make_unique<double>(*o.covariance_abs_determinant);
+    }
+    return *this;
 }
 
 Eigen::MatrixXd

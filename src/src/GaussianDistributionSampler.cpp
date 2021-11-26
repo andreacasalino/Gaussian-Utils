@@ -5,7 +5,7 @@
  * report any bug to andrecasa91@gmail.com.
  **/
 
-#include "GaussianDistributionSampler.h"
+#include <GaussianDistributionSampler.h>
 #include <Eigen/Cholesky>
 
 namespace gauss {
