@@ -1,7 +1,8 @@
 #include <Packer.h>
 #include <gtest/gtest.h>
 
-#include <GaussianDistribution.h>
+#include <GaussianUtils/GaussianDistribution.h>
+
 std::unique_ptr<gauss::GaussianDistribution>
 make_distribution(const Eigen::VectorXd &mean,
                   const Eigen::MatrixXd &covariance) {

@@ -1,7 +1,7 @@
-#include <GaussianDistribution.h>
+#include <GaussianUtils/GaussianDistribution.h>
 #include <Packer.h>
 #include <TestSampler.h>
-#include <Utils.h>
+#include <GaussianUtils/Utils.h>
 #include <gtest/gtest.h>
 #include <random>
 

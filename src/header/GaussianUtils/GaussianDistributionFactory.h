@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <GaussianDistribution.h>
-#include <components/RandomModelFactory.h>
+#include <GaussianUtils/GaussianDistribution.h>
+#include <GaussianUtils/components/RandomModelFactory.h>
 
 namespace gauss {
 class GaussianDistributionFactory

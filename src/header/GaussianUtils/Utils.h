@@ -8,7 +8,7 @@
 #pragma once
 
 #include <Eigen/Core>
-#include <../../../Gaussian-Utils/src/header/Error.h>
+#include <GaussianUtils/Error.h>
 
 namespace gauss {
 constexpr double PI_GREEK = 3.14159;
@@ -16,7 +16,7 @@ constexpr double PI_GREEK = 3.14159;
 template <typename Iterable, typename SampleExtractor>
 Eigen::VectorXd computeMean(const Iterable &samples, const SampleExtractor& extractor) {
   if (samples.empty()) {
-    throw Error("empty samples container, when computing mean");
+    throw gauss::Error("empty samples container, when computing mean");
   }
   Eigen::VectorXd result(samples.front().size());
   result.setZero();

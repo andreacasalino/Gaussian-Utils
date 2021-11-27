@@ -1,8 +1,8 @@
-#include <GaussianDistribution.h>
-#include <GaussianDistributionFactory.h>
+#include <GaussianUtils/GaussianDistribution.h>
+#include <GaussianUtils/GaussianDistributionFactory.h>
 #include <Packer.h>
 #include <TestSampler.h>
-#include <Utils.h>
+#include <GaussianUtils/Utils.h>
 #include <gtest/gtest.h>
 #include <vector>
 
