@@ -8,7 +8,7 @@
 #pragma once
 
 #include <Eigen/Core>
-#include <Error.h>
+#include <../../../Gaussian-Utils/src/header/Error.h>
 
 namespace gauss {
 constexpr double PI_GREEK = 3.14159;
