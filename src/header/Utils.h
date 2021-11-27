@@ -8,7 +8,7 @@
 #pragma once
 
 #include <Eigen/Core>
-#include <stdexcept>
+#include <Error.h>
 
 namespace gauss {
 constexpr double PI_GREEK = 3.14159;
@@ -16,7 +16,7 @@ constexpr double PI_GREEK = 3.14159;
 template <typename Iterable>
 Eigen::VectorXd computeMean(const Iterable &samples) {
   if (samples.empty()) {
-    throw std::runtime_error("empty samples container");
+    throw Error("empty samples container, when computing mean");
   }
   Eigen::VectorXd result(samples.front().size());
   result.setZero();
@@ -37,7 +37,7 @@ template <typename Iterable>
 Eigen::MatrixXd computeCovariance(const Iterable &samples,
                                   Eigen::VectorXd &mean) {
   if (samples.empty()) {
-    throw std::runtime_error("empty samples container");
+    throw Error("empty samples container, when computing covariance");
   }
   mean = computeMean(samples);
   Eigen::MatrixXd result(samples.front().size(), samples.front().size());

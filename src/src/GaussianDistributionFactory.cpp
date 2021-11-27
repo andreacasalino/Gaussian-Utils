@@ -1,5 +1,12 @@
+/**
+ * Author:    Andrea Casalino
+ * Created:   26.11.2021
+ *
+ * report any bug to andrecasa91@gmail.com.
+ **/
+
 #include <GaussianDistributionFactory.h>
-#include <stdexcept>
+#include <Error.h>
 
 namespace gauss {
 	GaussianDistributionFactory::GaussianDistributionFactory(const std::size_t model_size)
@@ -7,7 +14,7 @@ namespace gauss {
 		, mean_scale(model_size)
 		, covariance_eigenvalues(model_size) {
 		if (0 == model_size) {
-			throw std::runtime_error("Invalid model size");
+			throw Error("Invalid model size");
 		}
 		mean_center.setZero();
 		mean_scale.setOnes();
@@ -62,25 +69,25 @@ namespace gauss {
 
 	void GaussianDistributionFactory::setMeanCenter(const Eigen::VectorXd& center) {
 		if (mean_center.size() != center.size()) {
-			throw std::runtime_error("Invalid mean center");
+			throw Error("Invalid mean center");
 		}
 		mean_center = center;
 	}
 
 	void GaussianDistributionFactory::setMeanScale(const Eigen::VectorXd& scale) {
 		if (mean_scale.size() != scale.size()) {
-			throw std::runtime_error("Invalid mean scale");
+			throw Error("Invalid mean scale");
 		}
 		mean_scale = scale;
 	}
 
 	void GaussianDistributionFactory::setEigenValues(const Eigen::VectorXd& eigs) {
 		if (covariance_eigenvalues.size() != eigs.size()) {
-			throw std::runtime_error("Invalid eigenvalues");
+			throw Error("Invalid eigenvalues");
 		}
 		for (Eigen::Index i = 0; i < eigs.size(); ++i) {
 			if (eigs(i) < 0.000001) {
-				throw std::runtime_error("Invalid eigenvalues: at least one negative value");
+				throw Error("Invalid eigenvalues: at least one negative value");
 			}
 		}
 		covariance_eigenvalues = eigs;
