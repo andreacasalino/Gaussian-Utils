@@ -29,8 +29,8 @@ public:
 
   template <typename Iterable>
   GaussianDistribution(const Iterable &samples)
-      : GaussianDistribution(computeMean(samples),
-                             computeCovariance(samples)){};
+      : GaussianDistribution(computeMean(samples, [](const auto& sample) { return sample; }),
+                             computeCovariance(samples, [](const auto& sample) { return sample; })){};
 
   GaussianDistribution(const GaussianDistribution &o);
   GaussianDistribution &operator=(const GaussianDistribution &o);
