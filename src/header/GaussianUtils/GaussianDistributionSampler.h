@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <GaussianDistribution.h>
+#include <GaussianUtils/GaussianDistribution.h>
 #include <random>
 
 namespace gauss {

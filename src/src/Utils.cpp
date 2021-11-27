@@ -6,7 +6,7 @@
  **/
 
 #include <Eigen/Eigenvalues>
-#include <Utils.h>
+#include <GaussianUtils/Utils.h>
 
 namespace gauss {
 void computeCovarianceInvert(Eigen::MatrixXd &sigma_inverse,

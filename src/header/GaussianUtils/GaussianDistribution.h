@@ -7,12 +7,12 @@
 
 #pragma once
 
-#include <Utils.h>
-#include <components/CoviarianceAware.h>
-#include <components/DivergenceAware.h>
-#include <components/DrawSamplesCapable.h>
-#include <components/LogDensityAware.h>
-#include <components/MeanAware.h>
+#include <GaussianUtils/Utils.h>
+#include <GaussianUtils/components/CoviarianceAware.h>
+#include <GaussianUtils/components/DivergenceAware.h>
+#include <GaussianUtils/components/DrawSamplesCapable.h>
+#include <GaussianUtils/components/LogDensityAware.h>
+#include <GaussianUtils/components/MeanAware.h>
 #include <memory>
 
 namespace gauss {

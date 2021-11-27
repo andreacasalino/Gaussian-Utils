@@ -5,8 +5,8 @@
  * report any bug to andrecasa91@gmail.com.
  **/
 
-#include <GaussianDistributionFactory.h>
-#include <Error.h>
+#include <GaussianUtils/GaussianDistributionFactory.h>
+#include <GaussianUtils/Error.h>
 
 namespace gauss {
 	GaussianDistributionFactory::GaussianDistributionFactory(const std::size_t model_size)

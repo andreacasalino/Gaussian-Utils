@@ -5,10 +5,10 @@
  * report any bug to andrecasa91@gmail.com.
  **/
 
-#include <GaussianDistributionSampler.h>
+#include <GaussianUtils/GaussianDistributionSampler.h>
 #include <Eigen/Dense>
-#include <GaussianDistribution.h>
-#include <Error.h>
+#include <GaussianUtils/GaussianDistribution.h>
+#include <GaussianUtils/Error.h>
 
 namespace gauss {
 GaussianDistribution::GaussianDistribution(const Eigen::VectorXd &mean,
