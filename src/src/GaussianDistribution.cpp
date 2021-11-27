@@ -8,7 +8,7 @@
 #include <GaussianDistributionSampler.h>
 #include <Eigen/Dense>
 #include <GaussianDistribution.h>
-#include <stdexcept>
+#include <Error.h>
 
 namespace gauss {
 GaussianDistribution::GaussianDistribution(const Eigen::VectorXd &mean,
@@ -16,7 +16,7 @@ GaussianDistribution::GaussianDistribution(const Eigen::VectorXd &mean,
                                            bool treat_covariance_as_inv)
     : mean(mean) {
   if (!isSuitableCovarianceMatrix(covariance)) {
-    throw std::runtime_error("Invalid covariance");
+    throw Error("Invalid covariance");
   }
   if (treat_covariance_as_inv) {
     this->covariance_inv = std::make_unique<const Eigen::MatrixXd>(covariance);
