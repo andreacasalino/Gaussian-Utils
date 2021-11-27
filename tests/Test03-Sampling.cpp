@@ -35,7 +35,7 @@ TEST(Sampling, 3d) {
 
   auto samples = gauss::GaussianDistribution(mean, sigma).drawSamples(SAMPLES);
   Eigen::VectorXd samples_mean;
-  auto samples_cov = gauss::computeCovariance(samples, samples_mean);
+  auto samples_cov = gauss::computeCovariance(samples, samples_mean, [](const Eigen::VectorXd& sample) { return sample; });
 
   expect_similar(mean, samples_mean);
   expect_similar(sigma, samples_cov);
@@ -48,7 +48,7 @@ TEST(Sampling, 6d) {
 
   auto samples = model->drawSamples(SAMPLES);
   Eigen::VectorXd samples_mean;
-  auto samples_cov = gauss::computeCovariance(samples, samples_mean);
+  auto samples_cov = gauss::computeCovariance(samples, samples_mean, [](const Eigen::VectorXd& sample) { return sample; });
 
   expect_similar(mean, samples_mean);
   expect_similar(sigma, samples_cov);
