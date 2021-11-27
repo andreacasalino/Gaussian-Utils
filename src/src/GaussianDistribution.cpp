@@ -95,4 +95,16 @@ GaussianDistribution::drawSamples(const std::size_t samples) const {
   return result;
 }
 
+double GaussianDistribution::evaluateKullbackLeiblerDivergence(
+    const GaussianDistribution& other) const {
+    double result = log(abs(other.getCovarianceDeterminant())) - log(abs(this->getCovarianceDeterminant()));
+    const auto cov_inv = other.getCovarianceInv();
+    Eigen::MatrixXd P = cov_inv * this->getCovariance();
+    result += P.trace();
+    Eigen::VectorXd Delta = this->mean - other.mean;
+    result += Delta.transpose() * cov_inv * Delta;
+    result -= static_cast<double>(this->mean.size());
+    result *= 0.5f;
+    return result;
+}
 } // namespace gauss
