@@ -50,8 +50,7 @@ Eigen::MatrixXd computeCovariance(const Iterable &samples,
   return result;
 }
 
-void computeCovarianceInvert(Eigen::MatrixXd &sigma_inverse,
-                             const Eigen::MatrixXd &sigma);
+Eigen::MatrixXd computeCovarianceInvert(const Eigen::MatrixXd &sigma);
 
 bool isSuitableCovarianceMatrix(const Eigen::MatrixXd &sigma);
 } // namespace gauss
