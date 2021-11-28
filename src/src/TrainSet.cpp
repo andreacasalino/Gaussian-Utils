@@ -7,6 +7,7 @@
 
 #include <GaussianUtils/TrainSet.h>
 #include <fstream>
+#include <list>
 
 namespace gauss {
     TrainSet::TrainSet(const Eigen::VectorXd& initialSample) {
