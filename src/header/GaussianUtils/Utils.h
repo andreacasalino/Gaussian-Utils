@@ -29,7 +29,7 @@ Eigen::VectorXd computeMean(const Iterable &samples, const SampleExtractor& extr
 
 template <typename Iterable, typename SampleExtractor>
 Eigen::MatrixXd computeCovariance(const Iterable &samples, const SampleExtractor& extractor) {
-  Eigen::MatrixXd temp;
+  Eigen::VectorXd temp;
   return computeCovariance(samples, temp, extractor);
 }
 

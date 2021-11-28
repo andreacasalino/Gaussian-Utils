@@ -8,6 +8,7 @@
 #pragma once
 
 #include <GaussianUtils/Utils.h>
+#include <GaussianUtils/TrainSet.h>
 #include <GaussianUtils/components/CoviarianceAware.h>
 #include <GaussianUtils/components/DivergenceAware.h>
 #include <GaussianUtils/components/DrawSamplesCapable.h>
@@ -29,10 +30,9 @@ public:
                        const Eigen::MatrixXd &covariance,
                        bool treat_covariance_as_inv = false);
 
-  template <typename Iterable>
-  GaussianDistribution(const Iterable &samples)
-      : GaussianDistribution(computeMean(samples, [](const auto& sample) { return sample; }),
-                             computeCovariance(samples, [](const auto& sample) { return sample; })){};
+  GaussianDistribution(const TrainSet& samples)
+      : GaussianDistribution(computeMean(samples.GetSamples(), [](const auto& sample) { return sample; }),
+                             computeCovariance(samples.GetSamples(), [](const auto& sample) { return sample; })){};
 
   GaussianDistribution(const GaussianDistribution &o);
   GaussianDistribution &operator=(const GaussianDistribution &o);

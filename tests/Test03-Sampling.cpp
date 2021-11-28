@@ -46,12 +46,20 @@ TEST(Sampling, 6d) {
    auto mean = model->getMean();
    auto sigma = model->getCovariance();
 
-  auto samples = model->drawSamples(SAMPLES);
-  Eigen::VectorXd samples_mean;
-  auto samples_cov = gauss::computeCovariance(samples, samples_mean, [](const Eigen::VectorXd& sample) { return sample; });
+   auto samples = model->drawSamples(SAMPLES);
 
-  expect_similar(mean, samples_mean);
-  expect_similar(sigma, samples_cov);
+   {
+       Eigen::VectorXd samples_mean;
+       auto samples_cov = gauss::computeCovariance(samples, samples_mean, [](const Eigen::VectorXd& sample) { return sample; });
+       expect_similar(mean, samples_mean);
+       expect_similar(sigma, samples_cov);
+   }
+
+   {
+       gauss::GaussianDistribution learnt_distribution = { gauss::TrainSet(samples) };
+       expect_similar(mean, learnt_distribution.getMean());
+       expect_similar(sigma, learnt_distribution.getCovariance());
+   }
 }
 
 int main(int argc, char *argv[]) {
