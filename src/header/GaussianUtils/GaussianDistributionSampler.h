@@ -11,9 +11,11 @@
 #include <random>
 
 namespace gauss {
-class GaussianDistributionSampler {
+class GaussianDistributionSampler : public StateSpaceSizeAware {
 public:
   GaussianDistributionSampler(const GaussianDistribution &distribution);
+
+  std::size_t getStateSpaceSize() const override { return traslation.size(); }
 
   Eigen::VectorXd getSample() const;
 

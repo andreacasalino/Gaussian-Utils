@@ -13,6 +13,7 @@
 #include <GaussianUtils/components/DrawSamplesCapable.h>
 #include <GaussianUtils/components/LogDensityAware.h>
 #include <GaussianUtils/components/MeanAware.h>
+#include <GaussianUtils/components/StateSpaceSizeAware.h>
 #include <memory>
 
 namespace gauss {
@@ -20,7 +21,8 @@ class GaussianDistribution : public CovarianceAware,
                              public DivergenceAware<GaussianDistribution>,
                              public DrawSamplesCapable,
                              public LogDensityAware,
-                             public MeanAware {
+                             public MeanAware,
+                             public StateSpaceSizeAware {
 public:
   // throw in case of not valid inputs
   GaussianDistribution(const Eigen::VectorXd &mean,
@@ -37,6 +39,8 @@ public:
 
   GaussianDistribution(GaussianDistribution &&o);
   GaussianDistribution &operator=(GaussianDistribution &&o);
+
+  std::size_t getStateSpaceSize() const override { return mean.size(); }
 
   Eigen::VectorXd getMean() const override { return mean; }
 

@@ -12,9 +12,12 @@
 
 namespace gauss {
 class GaussianDistributionFactory
-    : public RandomModelFactory<GaussianDistribution> {
+    : public RandomModelFactory<GaussianDistribution>
+    , public StateSpaceSizeAware {
 public:
   GaussianDistributionFactory(const std::size_t model_size);
+
+  std::size_t getStateSpaceSize() const override { return mean_center.size(); }
 
   std::unique_ptr<GaussianDistribution> makeRandomModel() const override;
 
