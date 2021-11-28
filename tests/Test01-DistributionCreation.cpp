@@ -3,67 +3,47 @@
 
 #include <GaussianUtils/GaussianDistribution.h>
 
-std::unique_ptr<gauss::GaussianDistribution>
-make_distribution(const Eigen::VectorXd &mean,
-                  const Eigen::MatrixXd &covariance) {
-  std::unique_ptr<gauss::GaussianDistribution> result;
-  try {
-    result = std::make_unique<gauss::GaussianDistribution>(mean, covariance);
-  } catch (...) {
-    result = nullptr;
-  }
-  return result;
-}
-
 TEST(DistributionCreation, 1d) {
-  EXPECT_FALSE(make_distribution(gauss::test::make_vector({0}),
-                                 gauss::test::make_matrix({{1}})) == nullptr);
+    EXPECT_NO_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 0 }),
+        gauss::test::make_matrix({ {1} })));
 
-  EXPECT_FALSE(make_distribution(gauss::test::make_vector({1}),
-                                 gauss::test::make_matrix({{1}})) == nullptr);
+    EXPECT_NO_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 1 }),
+        gauss::test::make_matrix({ {1} })));
 
-  EXPECT_FALSE(make_distribution(gauss::test::make_vector({-1}),
-                                 gauss::test::make_matrix({{1}})) == nullptr);
+    EXPECT_NO_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ -1 }),
+        gauss::test::make_matrix({ {1} })));
 
-  EXPECT_TRUE(make_distribution(gauss::test::make_vector({0}),
-                                gauss::test::make_matrix({{-1}})) == nullptr);
+    EXPECT_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 0 }),
+        gauss::test::make_matrix({ {-1} })), gauss::Error);
 
-  EXPECT_TRUE(make_distribution(gauss::test::make_vector({0}),
-                                gauss::test::make_matrix({{-10}})) == nullptr);
+    EXPECT_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 0 }),
+        gauss::test::make_matrix({ {-10} })), gauss::Error);
 }
 
 TEST(DistributionCreation, 2d) {
-  EXPECT_FALSE(make_distribution(gauss::test::make_vector({0, 0}),
-                                 gauss::test::make_matrix({{1, 0}, {0, 2}})) ==
-               nullptr);
+    EXPECT_NO_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 0, 0 }),
+        gauss::test::make_matrix({ {1, 0}, {0, 2} })));
 
-  EXPECT_FALSE(make_distribution(gauss::test::make_vector({1, -1}),
-                                 gauss::test::make_matrix({{1, 0}, {0, 2}})) ==
-               nullptr);
+    EXPECT_NO_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 1, -1 }),
+        gauss::test::make_matrix({ {1, 0}, {0, 2} })));
 
-  EXPECT_FALSE(make_distribution(gauss::test::make_vector({-1, 1}),
-                                 gauss::test::make_matrix({{1, 0}, {0, 2}})) ==
-               nullptr);
+    EXPECT_NO_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ -1, 1 }),
+        gauss::test::make_matrix({ {1, 0}, {0, 2} })));
 
-  EXPECT_TRUE(make_distribution(gauss::test::make_vector({0, 0}),
-                                gauss::test::make_matrix({{-1, 0}, {0, 2}})) ==
-              nullptr);
+    EXPECT_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 0, 0 }),
+        gauss::test::make_matrix({ {-1, 0}, {0, 2} })), gauss::Error);
 
-  EXPECT_TRUE(make_distribution(gauss::test::make_vector({0, 0}),
-                                gauss::test::make_matrix({{1, 0}, {0, -2}})) ==
-              nullptr);
+    EXPECT_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 0, 0 }),
+        gauss::test::make_matrix({ {1, 0}, {0, -2} })), gauss::Error);
 
-  EXPECT_TRUE(make_distribution(gauss::test::make_vector({0, 0}),
-                                gauss::test::make_matrix({{1, 1}, {0, 2}})) ==
-              nullptr);
+    EXPECT_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 0, 0 }),
+        gauss::test::make_matrix({ {1, 1}, {0, 2} })), gauss::Error);
 
-  EXPECT_FALSE(make_distribution(gauss::test::make_vector({0, 0}),
-                                 gauss::test::make_matrix(
-                                     {{1, -0.1}, {-0.1, 2}})) == nullptr);
+    EXPECT_NO_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 0, 0 }),
+        gauss::test::make_matrix({ {1, -0.1}, {-0.1, 2} })));
 
-  EXPECT_TRUE(make_distribution(
-                  gauss::test::make_vector({0, 0}),
-                  gauss::test::make_matrix({{0.1, -1}, {-1, 0.1}})) == nullptr);
+    EXPECT_THROW(gauss::GaussianDistribution(gauss::test::make_vector({ 0, 0 }),
+        gauss::test::make_matrix({ {0.1, -1}, {-1, 0.1} })), gauss::Error);
 }
 
 int main(int argc, char *argv[]) {
