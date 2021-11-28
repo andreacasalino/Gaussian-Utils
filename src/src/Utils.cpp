@@ -9,13 +9,23 @@
 #include <GaussianUtils/Utils.h>
 
 namespace gauss {
-void computeCovarianceInvert(Eigen::MatrixXd &sigma_inverse,
-                             const Eigen::MatrixXd &sigma) {
-  // LLT<MatrixXf> lltOfCov(Sigma);
-  // MatrixXf L(lltOfCov.matrixL());
-  //*Sigma_inverse = L * L.transpose();
+Eigen::MatrixXd computeCovarianceInvert(const Eigen::MatrixXd &sigma) {
+    Eigen::EigenSolver<Eigen::MatrixXd> eig_solv(sigma);
+    auto eig_vals = eig_solv.eigenvalues();
+    auto eig_vecs_complex = eig_solv.eigenvectors();
+    Eigen::MatrixXd eig_vecs(eig_vecs_complex.rows(), eig_vecs_complex.cols());
+    for (Eigen::Index r = 0; r < eig_vecs_complex.rows(); ++r) {
+        for (Eigen::Index c = 0; c < eig_vecs_complex.cols(); ++c) {
+            eig_vecs(r, c) = eig_vecs_complex(r,c).real();
+        }
+    }
 
-  sigma_inverse = sigma.inverse();
+    Eigen::MatrixXd sigma_inverse (sigma.rows(), sigma.cols());
+    sigma_inverse.setZero();
+    for (Eigen::Index k = 0; k < sigma.rows(); ++k) {
+        sigma_inverse(k, k) = 1.0 / eig_vals(k).real();
+    }
+    return eig_vecs * sigma_inverse * eig_vecs.transpose();
 }
 
 constexpr double TOLLERANCE = 1e-5;

@@ -57,21 +57,21 @@ Eigen::MatrixXd
 GaussianDistribution::GaussianDistribution::getCovariance() const {
   if (nullptr == covariance) {
     covariance =
-        std::make_unique<const Eigen::MatrixXd>(covariance_inv->inverse());
+        std::make_unique<const Eigen::MatrixXd>(computeCovarianceInvert(*covariance_inv));
   }
   return *covariance;
 };
 Eigen::MatrixXd GaussianDistribution::getCovarianceInv() const {
   if (nullptr == covariance_inv) {
     covariance_inv =
-        std::make_unique<const Eigen::MatrixXd>(covariance->inverse());
+        std::make_unique<const Eigen::MatrixXd>(computeCovarianceInvert(*covariance));
   }
   return *covariance_inv;
 };
 double GaussianDistribution::getCovarianceDeterminant() const {
   if (nullptr == covariance) {
     covariance =
-        std::make_unique<const Eigen::MatrixXd>(covariance_inv->inverse());
+        std::make_unique<const Eigen::MatrixXd>(computeCovarianceInvert(*covariance_inv));
   }
   if (nullptr == covariance_abs_determinant) {
     covariance_abs_determinant =
@@ -86,7 +86,7 @@ GaussianDistribution::evaluateLogDensity(const Eigen::VectorXd &point) const {
   double den;
   if (nullptr == covariance_inv) {
     covariance_inv =
-        std::make_unique<const Eigen::MatrixXd>(covariance->inverse());
+        std::make_unique<const Eigen::MatrixXd>(computeCovarianceInvert(*covariance));
   }
   den = (point - mean).transpose() * (*covariance_inv) * (point - mean);
   den += point.size() * LOG_2_PI;
