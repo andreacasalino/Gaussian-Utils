@@ -35,8 +35,8 @@ public:
   GaussianDistribution(const GaussianDistribution &o);
   GaussianDistribution &operator=(const GaussianDistribution &o);
 
-  GaussianDistribution(GaussianDistribution &&o) = delete;
-  GaussianDistribution &operator=(GaussianDistribution &&o) = delete;
+  GaussianDistribution(GaussianDistribution &&o);
+  GaussianDistribution &operator=(GaussianDistribution &&o);
 
   Eigen::VectorXd getMean() const override { return mean; }
 

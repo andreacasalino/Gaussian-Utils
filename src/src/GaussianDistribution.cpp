@@ -42,6 +42,17 @@ GaussianDistribution& GaussianDistribution::operator=(const GaussianDistribution
     return *this;
 }
 
+GaussianDistribution::GaussianDistribution(GaussianDistribution&& o) {
+    *this = std::move(o);
+}
+GaussianDistribution& GaussianDistribution::operator=(GaussianDistribution&& o) {
+    this->mean = o.mean;
+    this->covariance = std::move(o.covariance);
+    this->covariance_inv = std::move(o.covariance_inv);
+    this->covariance_abs_determinant = std::move(o.covariance_abs_determinant);
+    return *this;
+}
+
 Eigen::MatrixXd
 GaussianDistribution::GaussianDistribution::getCovariance() const {
   if (nullptr == covariance) {
