@@ -50,4 +50,11 @@ namespace gauss {
     }
     TrainSet::TrainSet(const std::string& file_to_read) : TrainSet(importSamples(file_to_read)) {
     }
+
+    void TrainSet::operator+=(const Eigen::VectorXd& sample) {
+        if (samples.front().size() != sample.size()) {
+            throw gauss::Error("found invalid size for sample to add");
+        }
+        samples.push_back(sample);
+    }
 }

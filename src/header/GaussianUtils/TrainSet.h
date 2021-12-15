@@ -38,17 +38,21 @@ namespace gauss {
 			this->addSamples(it, samples.end());
 		};
 
+		TrainSet(const Eigen::VectorXd& initialSample);
+
 		/** @brief Append the samples of another set into this set.
 		 */
 		inline void operator+=(const TrainSet& o) { this->addSamples(o.samples.begin(), o.samples.end()); };
+
+		/** @brief Append one single sample.
+		 */
+		void operator+=(const Eigen::VectorXd& sample);
 
 		/** @brief Get the list of samples of this set.
 		 */
 		const std::vector<Eigen::VectorXd>& GetSamples() const { return samples; };
 
-	private:
-		TrainSet(const Eigen::VectorXd& initialSample);
-
+	protected:
 		template<typename CollectionIter>
 		void addSamples(const CollectionIter& samplesBegin, const CollectionIter& samplesEnd) {
 			std::size_t to_add = 0;
@@ -58,13 +62,8 @@ namespace gauss {
 				}
 			}
 			samples.reserve(samples.size() + to_add);
-			std::size_t pos = 0;
 			for (auto it = samplesBegin; it != samplesEnd; ++it) {
-				if (samples.front().size() != it->size()) {
-					throw gauss::Error("found invalid size for sample " + pos);
-				}
-				samples.push_back(*it);
-				++pos;
+				*this += *it;
 			}
 		};
 
