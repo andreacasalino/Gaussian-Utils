@@ -45,7 +45,7 @@ namespace gauss {
 					make_orthogonal(col, rotation.col(k2));
 				}
 				col *= 1.0 / col.norm();
-				rotation.col(k) = col;
+				rotation.col(static_cast<Eigen::Index>(k)) = col;
 			}
 			return rotation;
 		}

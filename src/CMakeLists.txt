@@ -14,7 +14,7 @@ else()
 	FetchContent_Declare(
 	  eigen
 	  GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
-	  GIT_TAG        master
+	  GIT_TAG        b3bea43a2da484d420e20c615cb5c9e3c04024e5
 	)
 	FetchContent_MakeAvailable(eigen)
 endif()
