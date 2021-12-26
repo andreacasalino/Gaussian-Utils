@@ -30,3 +30,6 @@ MakeTest(Test01-DistributionCreation)
 MakeTest(Test02-PdfEvaluation)
 
 MakeTest(Test03-Sampling)
+
+MakeTest(Test04-Conditioned)
+
