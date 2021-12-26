@@ -42,6 +42,8 @@ jobs:
       run: ./artifacts/bin/Test02-PdfEvaluation
     - name: Test-03
       run: ./artifacts/bin/Test03-Sampling
+    - name: Test-04
+      run: ./artifacts/bin/Test04-Conditioned
     - uses: actions/upload-artifact@v2
       with:
         path: artifacts

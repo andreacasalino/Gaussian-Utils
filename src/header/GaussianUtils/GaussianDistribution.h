@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <GaussianUtils/Utils.h>
 #include <GaussianUtils/TrainSet.h>
+#include <GaussianUtils/Utils.h>
 #include <GaussianUtils/components/CoviarianceAware.h>
 #include <GaussianUtils/components/DivergenceAware.h>
 #include <GaussianUtils/components/DrawSamplesCapable.h>
@@ -16,6 +16,7 @@
 #include <GaussianUtils/components/MeanAware.h>
 #include <GaussianUtils/components/StateSpaceSizeAware.h>
 #include <memory>
+#include <set>
 
 namespace gauss {
 class GaussianDistribution : public CovarianceAware,
@@ -30,9 +31,12 @@ public:
                        const Eigen::MatrixXd &covariance,
                        bool treat_covariance_as_inv = false);
 
-  GaussianDistribution(const TrainSet& samples)
-      : GaussianDistribution(computeMean(samples.GetSamples(), [](const auto& sample) { return sample; }),
-                             computeCovariance(samples.GetSamples(), [](const auto& sample) { return sample; })){};
+  GaussianDistribution(const TrainSet &samples)
+      : GaussianDistribution(
+            computeMean(samples.GetSamples(),
+                        [](const auto &sample) { return sample; }),
+            computeCovariance(samples.GetSamples(),
+                              [](const auto &sample) { return sample; })){};
 
   GaussianDistribution(const GaussianDistribution &o);
   GaussianDistribution &operator=(const GaussianDistribution &o);
@@ -54,7 +58,13 @@ public:
   double evaluateLogDensity(const Eigen::VectorXd &point) const override;
 
   double evaluateKullbackLeiblerDivergence(
-      const GaussianDistribution& other) const override;
+      const GaussianDistribution &other) const override;
+
+  GaussianDistribution getConditioned(const std::size_t observation_index,
+                                      const double observation) const;
+  GaussianDistribution
+  getConditioned(const std::set<std::size_t> &observations_indices,
+                 const Eigen::VectorXd &observations) const;
 
 protected:
   Eigen::VectorXd mean;
