@@ -14,8 +14,11 @@ set(WITH_SOURCE_TREE ON)
 include(GroupSources)
 include(AutoCollect)
 include(MakeLibrary)
+include(FetchEigen)
 
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+
+FETCH_EIGEN()
 
 project(GaussianUtils)
 add_subdirectory(src)
