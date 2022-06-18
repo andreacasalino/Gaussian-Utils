@@ -1,19 +1,13 @@
 function(FETCH_EIGEN)
 
-if (TARGET Eigen3::Eigen)
-  return()
-endif()
-if (TARGET EigenIntrfc)
-  return()
-endif()
-
+SET(EIGEN_BUILD_DOC OFF CACHE BOOL "Avoid eigen doc" FORCE)
 if(EIGEN_INSTALL_FOLDER)
 	message(STATUS "using Eigen from local folder at ${EIGEN_INSTALL_FOLDER}")
-	
-	add_library(EigenIntrfc INTERFACE)
-
-	target_include_directories(EigenIntrfc INTERFACE ${EIGEN_INSTALL_FOLDER})	
 else()	
+	if (TARGET Eigen3::Eigen)
+		return()
+	endif()
+	
 	message(STATUS "fetching Eigen from git")
 
 	include(FetchContent)
@@ -28,16 +22,12 @@ endif()
 endfunction()
 
 
-function(LINK_EIGEN TARGET_NAME)
+function(LINK_EIGEN TARGET_NAME MODE)
 
-if (TARGET EigenIntrfc)
-	target_link_libraries(${TARGET_NAME} INTERFACE EigenIntrfc)
-	return()
-endif()
-
-if (TARGET Eigen3::Eigen)
-	target_link_libraries(${TARGET_NAME} PUBLIC Eigen3::Eigen)
-	return()
+if(EIGEN_INSTALL_FOLDER)
+	target_include_directories(${TARGET_NAME} ${MODE} ${EIGEN_INSTALL_FOLDER})
+else()
+	target_link_libraries(${TARGET_NAME} ${MODE} Eigen3::Eigen)
 endif()
 
 endfunction()
