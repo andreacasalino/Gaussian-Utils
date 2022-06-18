@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-message("<<========== ${CMAKE_CURRENT_SOURCE_DIR} ==========>>")
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/MakeLibrary.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/FetchEigen.cmake)
 
